@@ -7,16 +7,22 @@ class LeiturasConcessionariaRepository:
         self.directus_api = DirectusAPI()
 
     @error_handler
-    def obter_todos(self):
+    def obter_todos(self, periodo_da_leitura):
         return self.directus_api.get_directus(
-            endpoint="/items/leituras_concessionaria"
+            endpoint="/items/leituras_concessionaria",
+            params={
+                "filter[data_da_leitura][_between]": periodo_da_leitura,
+            },
         )["data"]
 
     @error_handler
-    def obter_por_condominio_id(self, condominio_id):
+    def obter_por_condominio_id(self, condominio_id, periodo_da_leitura):
         return self.directus_api.get_directus(
             endpoint="/items/leituras_concessionaria",
-            params={"filter[condominio_id][_eq]": condominio_id},
+            params={
+                "filter[condominio_id][_eq]": condominio_id,
+                "filter[data_da_leitura][_between]": periodo_da_leitura,
+            },
         )["data"]
 
     @error_handler

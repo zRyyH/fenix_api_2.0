@@ -39,7 +39,7 @@ class CondominioCalculator(CompositeCalculator):
         total_arrecadado = 0.0
         for leitura in data["leituras_unidades"]:
             # Verificar se a leitura tem o status "concluido"
-            if not leitura.get("status") == "concluido":
+            if not leitura.get("status") == "analise":
                 continue
 
             # Contexto para cálculo do valor individual
@@ -67,7 +67,7 @@ class CondominioCalculator(CompositeCalculator):
         consumos_unidades = []
         for leitura in data["leituras_unidades"]:
             # Processar apenas leituras com status concluído
-            if not leitura.get("status") == "concluido":
+            if not leitura.get("status") == "analise":
                 continue
 
             # Contexto para cálculo da unidade

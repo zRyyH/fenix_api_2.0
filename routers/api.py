@@ -1,4 +1,3 @@
-from services.leituras_condominios_service import criar_leituras_condominios
 from services.leituras_unidades_service import criar_leituras_unidades
 from services.leitura_orchestrator import LeituraOrchestrator
 from middleware.wrapper_routers import handle_exceptions
@@ -27,16 +26,8 @@ async def gerar_leituras_unidades(payload: LeituraUnidade):
 
 
 # Rota para gerar leituras
-@router.post("/gerar-leituras-condominios")
-@handle_exceptions
-async def gerar_leituras_condominios(payload: LeituraCondominio):
-    criar_leituras_condominios(payload)
-    return {"message": payload}
-
-
-# Rota para gerar leituras
 @router.post("/processar-leituras")
 @handle_exceptions
 async def gerar_leituras_condominios(payload: ProcessarLeituras):
-    orchestrator.processar_leituras("2025-04-20")
+    orchestrator.processar_leituras(payload.data_da_leitura)
     return {"message": "Leituras processadas com sucesso."}

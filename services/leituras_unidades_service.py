@@ -1,7 +1,8 @@
 from repository.leituras_unidades import LeiturasUnidadesRepository
 from repository.unidades import UnidadesRepository
+from utils.data_utils import gerar_intervalo_mes
 from utils.data_utils import extrair_data
-from logger import info, error, warning
+from logger import info, warning
 
 
 # Classe de serviço para manipular leituras unidades
@@ -48,8 +49,11 @@ def validar_leitura(medidor, leituras, payload):
 
 def criar_leituras_unidades(payload):
     try:
+        # Obter o intervalo de leitura
+        periodo_da_leitura = gerar_intervalo_mes(payload.data_da_leitura)
+
         # Obter todas as leituras
-        leituras = leituras_unidades_repository.obter_todos()
+        leituras = leituras_unidades_repository.obter_todos(periodo_da_leitura)
 
         # Obter todas as unidades
         unidades = unidades_repository.obter_todos()
@@ -71,7 +75,6 @@ def criar_leituras_unidades(payload):
                     info(
                         f"Leitura criada com sucesso para o medidor {medidor_id} na unidade {unidade['id']}."
                     )
-
         return True
 
     except Exception as e:
